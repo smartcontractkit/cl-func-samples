@@ -26,13 +26,42 @@ The smart contract can then calculate how much payment to send to the artist (th
         SOUNDCHART_APP_ID="soundcharts"
         SOUNDCHART_API_KEY="soundcharts"
 
-5. Study the file `./Twilio-Spotify-Functions-Source-Example.js`. Ensure you fill in the `VERIFIED_SENDER` constant.  
+5. Update the `../../hardhat.config.js` in the project's root file to include your private keys for a second wallet account We will pretend this is the artist's wallet address.
 
-6. Study the `RecordLabel` contract in `../../contracts/sample-apps/RecordLabel.sol` which makes the request and receives the results sent by the Functions source code example.  
+```
+accounts: process.env.PRIVATE_KEY
+        ? [
+            {
+              privateKey: process.env.PRIVATE_KEY,
+              balance: "10000000000000000000000",
+            },
+// Add this....
+            {
+              privateKey: process.env.SECOND_PRIVATE_KEY,
+              balance: "10000000000000000000000",
+            },
+          ]
+        : [],
+```
 
-7. Copy the value of the variable `requestConfig` in `./twilio-spotify-requestConfig.js` and replace the value of `requestConfig` in `../../Functions-request-config.js`.  Note that this example uses Off Chain Secrets.  Follow the instructions in the Main README on how to use Off Chain Secrets.
+6. Study the file `./Twilio-Spotify-Functions-Source-Example.js`. Ensure you fill in the `VERIFIED_SENDER` constant.  
 
-8. > :warning: **Update the Functions Consumer Contract in code**:When you're ready to run the CLI scripts described in the main README file, make sure you update the references to the client smart contract correctly. 
+7. Study the `RecordLabel` contract in `../../contracts/sample-apps/RecordLabel.sol` which makes the request and receives the results sent by the Functions source code example.  
+
+8. Copy the value of the variable `requestConfig` in `./twilio-spotify-requestConfig.js` and replace the value of `requestConfig` in `../../Functions-request-config.js`.  Note that this example uses Off Chain Secrets.  Follow the instructions in the Main README on how to use Off Chain Secrets.
+
+9. For the twilio-spotify example, the tasks are custom made in the `tasks/Sample-apps-tasks` folder.  The Tasks available for the sample apps are:
+
+```
+npx hardhat functions-simulate-twilio --gaslimit 300000 // set the max gas limit to run the computations in the RecorLabel's fulfillRequest() method
+
+// When ready to deploy to testnets, first deploy the mock stablecoin STC ERC20 contract
+yhh samples-deploy-stablecoin --network <<network name>>
+
+
+```
+
+10. > :warning: **Update the Functions Consumer Contract in code**:When you're ready to run the CLI scripts described in the main README file, make sure you update the references to the client smart contract correctly. 
 
     When running the CLI commands (which are Hardhat [tasks](https://hardhat.org/hardhat-runner/docs/guides/tasks-and-scripts)), be sure to find the script that implements the task in `/tasks` directory, and change the Contract name in the line that looks like this `const clientFactory = await ethers.getContractFactory("FunctionsConsumer")`. In the Twilio-spotify sample, the contract in this line will read as `const clientFactory = await ethers.getContractFactory("RecordLabel")`
 
