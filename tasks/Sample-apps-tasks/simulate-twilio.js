@@ -37,6 +37,7 @@ const {
       const { oracle, registry, linkToken } = await deployMockOracle()
   
       // Deploy the client contract
+      console.log("\n__Deploying Demo Record Label__")
       const clientContractFactory = await ethers.getContractFactory("RecordLabel")
       const clientContract = await clientContractFactory.deploy(oracle.address, stableCoinContract.address)
       await clientContract.deployTransaction.wait(1)
