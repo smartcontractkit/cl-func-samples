@@ -26,7 +26,7 @@ Before you get started we recommend you read the README in [this Functions tooli
 
 5. Get your RPC URL with API key for Sepolia or Mumbai - from [Infura](https://infura.io) or [Alchemy](https://alchemy.com). Also, get your network's token (Sepolia Eth ) or [Mumbai Matic](https://faucet.polygon.technology/) and, after connecting your Metamask wallet to the right testnet, get some LINK token(faucets.link.com) into your Metamask or other browser wallet.<br><br>
 
-6. Prepare to have the following environment variables available for easy copy-pasting.  **We do not recommend** storing your keys/secrets locally on your machine in a human-readable form, so its best to open windows that show your keys.  Further down, we will explain how to use the included `env-enc` tool to encrypt them in the `.env.enc` file on your development machine.
+6. Prepare to have the following environment variables available for easy copy-pasting. **We do not recommend** storing your keys/secrets locally on your machine in a human-readable form, so its best to open windows that show your keys. Further down, we will explain how to use the included `env-enc` tool to encrypt them in the `.env.enc` file on your development machine.
 
 **NOTE:** This Record Label example requires a second wallet private key!
 
@@ -38,13 +38,13 @@ Make sure you have at least the following environment variables ready:
           ARTIST_EMAIL="PRETEND_YOUR_EMAIL_IS_THE_ARTISTS"
           VERIFIED_SENDER="THE_EMAIL_VERIFIED_BY_TWILIO"
           TWILIO_API_KEY="YOUR TWILIO API KEY"
-          
+
           # Spotify streaming counts
           SOUNDCHART_APP_ID="soundcharts"
           SOUNDCHART_API_KEY="soundcharts"
 
           # Blockchain node access
-          MUMBAI_RPC_URL="https://polygon-mumbai.g.alchemy.com/v2/ExampleKey"  
+          MUMBAI_RPC_URL="https://polygon-mumbai.g.alchemy.com/v2/ExampleKey"
           # OR
           SEPOLIA_RPC_URL="https://sepolia.infura.io/v3/ExampleKey"
 
@@ -57,31 +57,33 @@ Make sure you have at least the following environment variables ready:
 
 If you want to verify smart contracts using the `--verify` flag, the _ETHERSCAN_API_KEY_ or _POLYGONSCAN_API_KEY_ must be set in your .env file so their values can be read in `Functions-request-config.js`.<br><br>
 
+7. Login to Github and head to your [settings](https://github.com/settings/tokens?type=beta) to generate a "Fine Grained Personal Access Token". Name the token, set its expiration period and then go down to **Permissions** >> "Account permissions" >> "Gists" and from the "Access" dropdown, select "Read and write".
 
-7. Login to Github and head to your [settings](https://github.com/settings/tokens?type=beta) to generate a "Fine Grained Personal Access Token". Name the token, set its expiration period and then go down to **Permissions** >> "Account permissions" >> "Gists" and from the "Access" dropdown, select "Read and write". 
+Scroll to the bottom of the page and click "Generate token" and copy the resulting personal access token.
 
-Scroll to the bottom of the page and click "Generate token" and copy the resulting personal access token.  
-> ⚠️	⚠️	⚠️ You cannot view this token in Github after this – so make sure you paste the value <u>temporarily</u> somewhere in case you need to close this window or want to navigate away from this page
-
+> ⚠️ ⚠️ ⚠️ You cannot view this token in Github after this – so make sure you paste the value <u>temporarily</u> somewhere in case you need to close this window or want to navigate away from this page
 
 <img width="637" alt="Screenshot 2023-05-01 at 10 59 30 am" src="https://user-images.githubusercontent.com/8016129/235385875-5ff0c21c-813d-4554-8934-0f9065cc0a2e.png">
 
-8. Next we encrypt our environment variables and store them in encrypted form. But to do that we need to supply a password to encrypt the secrets and keys with 
+8. Next we encrypt our environment variables and store them in encrypted form. But to do that we need to supply a password to encrypt the secrets and keys with
+
 ```bash
 npx env-enc set-pw
 ```
+
 This command npx env-enc set-pw must be run EVERY time you open or restart a terminal session, so that the encrypted secrets in your .env.enc file can be read by the package. After you set the password the first time, you must enter the identical password for the secrets to be successfully decrypted.
 
-
 9. Set the encrypted values to your secrets <u>one by one</u> using the following command:
+
 ```bash
 npx env-enc set
 ```
+
 Doing npx env-enc set will initiate a UI in your terminal for you to put your env var NAME and then its corresponding value as shown here:
 <img width="765" alt="Screenshot 2023-05-01 at 11 09 16 am" src="https://user-images.githubusercontent.com/8016129/235386817-dc290db7-56b9-4c5f-8f86-9d881a712f35.png">
 
-10. When you set one or more encrypted environment variables using `env-enc`, the tool creates a `env.enc` file in your project root.  It looks like this:
-<img width="659" alt="Screenshot 2023-05-01 at 11 10 58 am" src="https://user-images.githubusercontent.com/8016129/235386889-63a4d536-b0b3-4841-aa2a-411ab81be80f.png">
+10. When you set one or more encrypted environment variables using `env-enc`, the tool creates a `env.enc` file in your project root. It looks like this:
+    <img width="659" alt="Screenshot 2023-05-01 at 11 10 58 am" src="https://user-images.githubusercontent.com/8016129/235386889-63a4d536-b0b3-4841-aa2a-411ab81be80f.png">
 
 Remember, this `.env.enc` file can be copied and pasted into other Chainlink Functons projects but you'll need to use the `env-enc` package and you'll need to use the same password with which you encrypted these secrets.
 
